@@ -137,17 +137,17 @@ function PageRenderer() {
     this.renderCenter = function () {
 
         var mainCenter = $("<div>").css({ "background": "rgba(35, 249, 2, 0.5)", "marginTop": "50px", "display": "flex", "flex-direction": "column", "width": "1075", "height": "600", "justify-content": "center" }).html("");
-        
-        var startScreen = $("<span>").html("Choose Track").css({"align-self": "center", "font-size": "40px", "padding-top": "100px"});
+
+        var startScreen = $("<span>").html("Choose Track").css({ "align-self": "center", "font-size": "40px", "padding-top": "100px" });
         var select = $("<div>").css({ "marginTop": "50px", "display": "flex", "flex-direction": "row", "width": "1075", "height": "600", "justify-content": "center" }).html("");
 
-        var track1 = $("<img>").attr("src", "images/racetrack1.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () {
+        var chooseTrack = function (track) {
 
             var raceTrack = $("<canvas>");
             raceTrack[0].height = 600;
             raceTrack[0].width = 1075;
 
-            var raceAnimation = new Track1(raceTrack[0]);
+            var raceAnimation = new track(raceTrack[0]);
             raceAnimation.lapFinished = function () {
                 coins.gainCoins();
                 $("#coin").html(" Coins " + coins.coins);
@@ -220,169 +220,13 @@ function PageRenderer() {
             select.remove();
             startScreen.remove();
 
-        });
+        }
 
-        var track2 = $("<img>").attr("src", "images/racetrack2.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () {
+        var track1 = $("<img>").attr("src", "images/racetrack1.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () { chooseTrack(Track1) });
 
-            var raceTrack = $("<canvas>");
-            raceTrack[0].height = 600;
-            raceTrack[0].width = 1075;
+        var track2 = $("<img>").attr("src", "images/racetrack2.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () { chooseTrack(Track2) });
 
-            var raceAnimation = new Track2(raceTrack[0]);
-            raceAnimation.lapFinished = function () {
-                coins.gainCoins();
-                $("#coin").html(" Coins " + coins.coins);
-
-
-                if (coins.coins > enginelvl.engineCost) {
-                    $("#engineButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > aerodynamiclvl.aerodynamicsCost) {
-                    $("#aerodinamicButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > tireslvl.tireCost) {
-                    $("#tireButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > fuellvl.fuelCost) {
-                    $("#fuelButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-
-                if (enginelvl.lvlEngine > speedCounter && aerodynamiclvl.lvlAerodynamics > speedCounter && tireslvl.lvlTire > speedCounter && fuellvl.lvlFuel > speedCounter) {
-                    raceAnimation.speed.carSpeed();
-                    speedCounter++;
-                }
-            }
-
-            $("#engineButton").click(function () {
-                coins.spendCoins(enginelvl.engineCost);
-                $("#coin").html(" Coins " + coins.coins);
-                enginelvl.engineLevel();
-                $("#engineName").html("Engine LEVEL " + enginelvl.lvlEngine + " Cost " + enginelvl.engineCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#aerodinamicButton").click(function () {
-                coins.spendCoins(aerodynamiclvl.aerodynamicsCost);
-                $("#coin").html(" Coins " + coins.coins);
-                aerodynamiclvl.aerodynamicsLevel();
-                $("#aerodynamicName").html("Aerodynamic LEVEL " + aerodynamiclvl.lvlAerodynamics + " Cost " + aerodynamiclvl.aerodynamicsCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#tireButton").click(function () {
-                coins.spendCoins(tireslvl.tireCost);
-                $("#coin").html(" Coins " + coins.coins);
-                tireslvl.tireLevel();
-                $("#tireName").html("TIRES LEVEL " + tireslvl.lvlTire + " Cost " + tireslvl.tireCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#fuelButton").click(function () {
-                coins.spendCoins(fuellvl.fuelCost);
-                $("#coin").html(" Coins " + coins.coins);
-                fuellvl.fuelLevel();
-                $("#fuelName").html("Fuel LEVEL " + fuellvl.lvlFuel + " Cost " + fuellvl.fuelCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-
-            raceAnimation.animate();
-
-            mainCenter.append(raceTrack);
-
-            select.remove();
-            startScreen.remove();
-
-        });
-
-        var track3 = $("<img>").attr("src", "images/racetrack3.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () {
-
-            var raceTrack = $("<canvas>");
-            raceTrack[0].height = 600;
-            raceTrack[0].width = 1075;
-
-            var raceAnimation = new Track3(raceTrack[0]);
-            raceAnimation.lapFinished = function () {
-                coins.gainCoins();
-                $("#coin").html(" Coins " + coins.coins);
-
-
-                if (coins.coins > enginelvl.engineCost) {
-                    $("#engineButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > aerodynamiclvl.aerodynamicsCost) {
-                    $("#aerodinamicButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > tireslvl.tireCost) {
-                    $("#tireButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-                if (coins.coins > fuellvl.fuelCost) {
-                    $("#fuelButton").prop("disabled", false).css(buttonEnabledCss);
-                }
-
-                if (enginelvl.lvlEngine > speedCounter && aerodynamiclvl.lvlAerodynamics > speedCounter && tireslvl.lvlTire > speedCounter && fuellvl.lvlFuel > speedCounter) {
-                    raceAnimation.speed.carSpeed();
-                    speedCounter++;
-                }
-            }
-
-            $("#engineButton").click(function () {
-                coins.spendCoins(enginelvl.engineCost);
-                $("#coin").html(" Coins " + coins.coins);
-                enginelvl.engineLevel();
-                $("#engineName").html("Engine LEVEL " + enginelvl.lvlEngine + " Cost " + enginelvl.engineCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#aerodinamicButton").click(function () {
-                coins.spendCoins(aerodynamiclvl.aerodynamicsCost);
-                $("#coin").html(" Coins " + coins.coins);
-                aerodynamiclvl.aerodynamicsLevel();
-                $("#aerodynamicName").html("Aerodynamic LEVEL " + aerodynamiclvl.lvlAerodynamics + " Cost " + aerodynamiclvl.aerodynamicsCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#tireButton").click(function () {
-                coins.spendCoins(tireslvl.tireCost);
-                $("#coin").html(" Coins " + coins.coins);
-                tireslvl.tireLevel();
-                $("#tireName").html("TIRES LEVEL " + tireslvl.lvlTire + " Cost " + tireslvl.tireCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-            $("#fuelButton").click(function () {
-                coins.spendCoins(fuellvl.fuelCost);
-                $("#coin").html(" Coins " + coins.coins);
-                fuellvl.fuelLevel();
-                $("#fuelName").html("Fuel LEVEL " + fuellvl.lvlFuel + " Cost " + fuellvl.fuelCost);
-                $("#engineButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#aerodinamicButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
-                $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
-            });
-
-            raceAnimation.animate();
-
-            mainCenter.append(raceTrack);
-
-            select.remove();
-            startScreen.remove();
-
-        });
+        var track3 = $("<img>").attr("src", "images/racetrack3.png").css({ "margin-right": "10px", "width": "250px", "height": "150px", "align-self": "center" }).click(function () { chooseTrack(Track3) });
 
         select.append(track1).append(track2).append(track3);
 
