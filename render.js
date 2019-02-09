@@ -66,9 +66,7 @@ function PageRenderer() {
     this.renderAll = function () {
         var container = $("#main-container").css({ "display": "flex", "width": "80%" });
 
-        container.append(renderTop)
-            .append(renderRight)
-            .append(renderCenter);
+        container.append(renderTop).append(renderRight).append(renderCenter);
     }
 
     this.renderTop = function () {
@@ -94,41 +92,30 @@ function PageRenderer() {
         var engineImage = $("<img>").attr("src", "images/engine.jpg").css({ "width": "200px", "height": "100px", "align-self": "center" });
         var engineButton = $("<button>").attr("id", "engineButton").html("UpGrade Engine").prop("disabled", true).css(buttonDisabledCss);
 
-        engine.append(engineName)
-            .append(engineImage)
-            .append(engineButton);
+        engine.append(engineName).append(engineImage).append(engineButton);
 
         var aerodynamic = $("<div>");
         var aerodynamicName = $("<span>").attr("id", "aerodynamicName").html("Aerodynamic LEVEL " + aerodynamiclvl.lvlAerodynamics + " Cost " + aerodynamiclvl.aerodynamicsCost).css(textStyle);
         var aerodynamicImage = $("<img>").attr("src", "images/aerodynamic.png").css({ "width": "200px", "height": "100px", "align-self": "center" });
         var aerodynamicButton = $("<button>").attr("id", "aerodinamicButton").html("UpGrade Aerodynamics").prop("disabled", true).css(buttonDisabledCss);
 
-        engine.append(aerodynamicName)
-            .append(aerodynamicImage)
-            .append(aerodynamicButton);
+        engine.append(aerodynamicName).append(aerodynamicImage).append(aerodynamicButton);
 
         var tire = $("<div>");
         var tireName = $("<span>").attr("id", "tireName").html("TIRES LEVEL " + tireslvl.lvlTire + " Cost " + tireslvl.tireCost).css(textStyle);
         var tireImage = $("<img>").attr("src", "images/tire.jpg").css({ "width": "200px", "height": "100px", "align-self": "center" });
         var tireButton = $("<button>").attr("id", "tireButton").html("UpGrade Tire").prop("disabled", true).css(buttonDisabledCss);
 
-        engine.append(tireName)
-            .append(tireImage)
-            .append(tireButton);
+        engine.append(tireName).append(tireImage).append(tireButton);
 
         var fuel = $("<div>");
         var fuelName = $("<span>").attr("id", "fuelName").html("Fuel LEVEL " + fuellvl.lvlFuel + " Cost " + fuellvl.fuelCost).css(textStyle);
         var fuelImage = $("<img>").attr("src", "images/fuel.jpg").css({ "width": "200px", "height": "100px", "align-self": "center" });
         var fuelButton = $("<button>").attr("id", "fuelButton").html("UpGrade Fuel").prop("disabled", true).css(buttonDisabledCss);
 
-        engine.append(fuelName)
-            .append(fuelImage)
-            .append(fuelButton);
+        engine.append(fuelName).append(fuelImage).append(fuelButton);
 
-        upgrades.append(engine)
-            .append(aerodynamic)
-            .append(tire)
-            .append(fuel);
+        upgrades.append(engine).append(aerodynamic).append(tire).append(fuel);
 
         return upgrades;
     }
@@ -148,6 +135,7 @@ function PageRenderer() {
             raceTrack[0].width = 1075;
 
             var raceAnimation = new track(raceTrack[0]);
+
             raceAnimation.lapFinished = function () {
                 coins.gainCoins();
                 $("#coin").html(" Coins " + coins.coins);
@@ -182,6 +170,7 @@ function PageRenderer() {
                 $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
                 $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
             });
+
             $("#aerodinamicButton").click(function () {
                 coins.spendCoins(aerodynamiclvl.aerodynamicsCost);
                 $("#coin").html(" Coins " + coins.coins);
@@ -192,6 +181,7 @@ function PageRenderer() {
                 $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
                 $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
             });
+
             $("#tireButton").click(function () {
                 coins.spendCoins(tireslvl.tireCost);
                 $("#coin").html(" Coins " + coins.coins);
@@ -202,6 +192,7 @@ function PageRenderer() {
                 $("#tireButton").prop("disabled", true).css(buttonDisabledCss);
                 $("#fuelButton").prop("disabled", true).css(buttonDisabledCss);
             });
+            
             $("#fuelButton").click(function () {
                 coins.spendCoins(fuellvl.fuelCost);
                 $("#coin").html(" Coins " + coins.coins);
